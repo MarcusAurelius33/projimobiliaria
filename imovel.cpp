@@ -1,17 +1,17 @@
-#include "Imovel.h"
+#include "imovel.h"
 
 int Imovel::nextId=1;
 
 // Construtor
-Imovel::Imovel(int id, Tipo tipo, int proprietarioId, double lat, double lng, std::string endereco, double preco)
+Imovel::Imovel(Tipo tipo, int proprietarioId, double lat, double lng, std::string endereco, double preco)
     : id(nextId++), tipo(tipo), proprietarioId(proprietarioId), lat(lat), lng(lng), endereco(endereco), preco(preco) {}
 
 // Getters
 int Imovel::getId() const { return id; }
 Imovel::Tipo Imovel::getTipo() const { return tipo; }
 int Imovel::getProprietarioId() const { return proprietarioId; }
-double Imovel::getLat() const { return lat; }
-double Imovel::getLng() const { return lng; }
+double Imovel::getlat() const { return lat; }
+double Imovel::getlng() const { return lng; }
 std::string Imovel::getEndereco() const { return endereco; }
 double Imovel::getPreco() const { return preco; }
 

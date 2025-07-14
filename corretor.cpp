@@ -1,9 +1,9 @@
-#include "Corretor.h"
+#include "corretor.h"
 int Corretor::nextId = 1;
  
 // Construtor
-Corretor::Corretor(const std::string& nome, const std::string& telefone, bool avaliador)
-    : id(nextId++), nome(nome), telefone(telefone), avaliador(avaliador) {}
+Corretor::Corretor(const std::string& nome, const std::string& telefone, bool avaliador, double lat, double lng)
+    : id(nextId++), nome(nome), telefone(telefone), avaliador(avaliador), lat(lat), lng(lng) {}
 // Getters
 int Corretor::getId() const {
     return id;

@@ -1,3 +1,6 @@
+#ifndef IMOVEL_H
+#define IMOVEL_H
+
 #include <string>
 
 class Imovel {
@@ -16,13 +19,13 @@ class Imovel {
     double preco;
 
     public:
-    Imovel(int id, Tipo tipo, int proprietarioId, double lat, double lng, std::string endereco, double preco);
+    Imovel(Tipo tipo, int proprietarioId, double lat, double lng, std::string endereco, double preco);
 
     int getId() const;
     Tipo getTipo() const;
     int getProprietarioId() const;
-    double getLat() const;
-    double getLng() const;
+    double getlat() const;
+    double getlng() const;
     std::string getEndereco() const;
     double getPreco() const;
 
@@ -35,3 +38,4 @@ class Imovel {
     void setEndereco(std::string endereco);
     void setPreco(double preco);
 };
+#endif

@@ -1,3 +1,6 @@
+#ifndef CLIENTE_H
+#define CLIENTE_H
+
 #include <string>
 
 class Cliente {
@@ -20,3 +23,4 @@ class Cliente {
     void setNome(const std::string& nome);
     void setTelefone(const std::string& telefone);
 };
+#endif

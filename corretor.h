@@ -1,16 +1,21 @@
+#ifndef CORRETOR_H
+#define CORRETOR_H
+
 #include <string>
 
 class Corretor {
     private:
     int id;
     static int nextId;
+    double lat;  
+    double lng;  
 
     std::string nome;
     std::string telefone;
     bool avaliador;
 
     public:
-    Corretor(const std::string& nome, const std::string& telefone, bool avaliador);
+    Corretor(const std::string& nome, const std::string& telefone, bool avaliador, double lat, double lng);
     
     // Getters
     int getId() const;
@@ -24,3 +29,4 @@ class Corretor {
     void setTelefone(const std::string& telefone);
     void setAvaliador(bool avaliador);
 };
+#endif
