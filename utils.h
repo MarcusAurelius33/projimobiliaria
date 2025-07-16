@@ -25,4 +25,6 @@ double haversine(double lat1, double lon1, double lat2, double lon2);
  */
 void lerEntrada(std::vector<Corretor>& corretores, std::vector<Cliente>& clientes, std::vector<Imovel>& imoveis);
 
+void roundRobin (vector<Imovel>& imoveis, const vector<Corretor>& corretores);
+
 #endif // UTILS_H
