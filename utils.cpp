@@ -73,4 +73,28 @@ void lerEntrada(std::vector<Corretor>& corretores, std::vector<Cliente>& cliente
  
         imoveis.emplace_back(tipo_enum, proprietarioId, lat, lng, endereco, preco);
     }
+
+    // --- DISTRIBUIR IMÓVEIS ---
+    void roundRobin (vector<Imovel>& imoveis, const vector<Corretor>& corretores) {
+        // Ordena imóveis por ID
+        sort(imoveis.begin(), imoveis.end(), [](const Imovel& a, const Imovel& b) {
+            return a.id < b.id;
+        });
+    
+        // Filtra corretores avaliadores
+        vector<Corretor> avaliadores;
+        for (const auto& c : corretores) {
+            if (c.avaliador)
+                avaliadores.push_back(c);
+        }
+    
+        // Atribui imóveis aos avaliadores de forma circular
+        if (avaliadores.empty()) return;
+    
+        int idx = 0;
+        for (auto& imovel : imoveis) {
+            imovel.idCorretorAvaliador = avaliadores[idx].id;
+            idx = (idx + 1) % avaliadores.size(); // volta ao início ao fim da lista
+        }
+    }
 }
