@@ -101,4 +101,81 @@ void lerEntrada(std::vector<Corretor>& corretores, std::vector<Cliente>& cliente
             idx = (idx + 1) % avaliadores.size(); // volta ao início ao fim da lista
         }
     }
+
+    struct Agendamento {
+    int imovelId;
+    int corretorId;
+    std::string horario;
+    };
+    
+    // Converte minutos para "HH:MM"
+    std::string minutosParaHorario(int minutos) {
+        int h = minutos / 60;
+        int m = minutos % 60;
+        char buffer[6];
+        sprintf(buffer, "%02d:%02d", h, m);
+        return std::string(buffer);
+    }
+    
+    // --- AGENDAMENTO ---
+    std::vector<Agendamento> agendarVisitasPorVizinhoMaisProximo(
+        std::vector<Imovel>& imoveis,
+        const std::vector<Corretor>& corretores,
+        const std::map<int, int>& imovelParaCorretor // imovelId -> corretorId
+    ) {
+        std::vector<Agendamento> agendaFinal;
+    
+        for (const auto& corretor : corretores) {
+            if (!corretor.isAvaliador()) continue;
+    
+            // Filtrar imóveis atribuídos a este corretor
+            std::vector<Imovel*> atribuidos;
+            for (auto& imovel : imoveis) {
+                auto it = imovelParaCorretor.find(imovel.getId());
+                if (it != imovelParaCorretor.end() && it->second == corretor.getId()) {
+                    atribuidos.push_back(&imovel);
+                }
+            }
+    
+            double atualLat = corretor.getLat();
+            double atualLng = corretor.getLng();
+            int relogio = 9 * 60; // 09:00 em minutos
+    
+            while (!atribuidos.empty()) {
+                double menorDist = std::numeric_limits<double>::max();
+                int idxMaisProximo = -1;
+    
+                for (int i = 0; i < atribuidos.size(); ++i) {
+                    double dist = haversine(
+                        atualLat, atualLng,
+                        atribuidos[i]->getlat(), atribuidos[i]->getlng()
+                    );
+                    if (dist < menorDist) {
+                        menorDist = dist;
+                        idxMaisProximo = i;
+                    }
+                }
+    
+                Imovel* proximo = atribuidos[idxMaisProximo];
+                int tempoDesloc = static_cast<int>(menorDist * 2); // 2 minutos por km
+    
+                relogio += tempoDesloc;
+                std::string horario = minutosParaHorario(relogio);
+                relogio += 60; // avaliação leva 60 minutos
+    
+                agendaFinal.push_back({
+                    proximo->getId(),
+                    corretor.getId(),
+                    horario
+                });
+    
+                atualLat = proximo->getlat();
+                atualLng = proximo->getlng();
+    
+                atribuidos.erase(atribuidos.begin() + idxMaisProximo);
+            }
+        }
+    
+        return agendaFinal;
+    }
 }
