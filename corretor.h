@@ -19,12 +19,16 @@ class Corretor {
     
     // Getters
     int getId() const;
+    double getLat() const;
+    double getLng() const;
     std::string getNome() const;
     std::string getTelefone() const;
     bool isAvaliador() const;
 
     // Setters
     void setId(int id);
+    void setLat(double lat);
+    void setLng(double lng);
     void setNome(const std::string& nome);
     void setTelefone(const std::string& telefone);
     void setAvaliador(bool avaliador);
