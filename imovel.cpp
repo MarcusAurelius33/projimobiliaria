@@ -14,6 +14,7 @@ double Imovel::getlat() const { return lat; }
 double Imovel::getlng() const { return lng; }
 std::string Imovel::getEndereco() const { return endereco; }
 double Imovel::getPreco() const { return preco; }
+int Imovel::getIdCorretorAvaliador() const {return idCorretorAvaliador;}
 
 // Setters
 void Imovel::setId(int id) { this->id = id; }
@@ -23,3 +24,4 @@ void Imovel::setLat(double lat) { this->lat = lat; }
 void Imovel::setLng(double lng) { this->lng = lng; }
 void Imovel::setEndereco(std::string endereco) { this->endereco = endereco; }
 void Imovel::setPreco(double preco) { this->preco = preco; }
+void Imovel::setIdCorretorAvaliador(int id) {this->idCorretorAvaliador = id;}
