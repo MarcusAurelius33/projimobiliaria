@@ -17,6 +17,7 @@ class Imovel {
     double lng;
     std::string endereco;
     double preco;
+    int idCorretorAvaliador;
 
     public:
     Imovel(Tipo tipo, int proprietarioId, double lat, double lng, std::string endereco, double preco);
@@ -28,6 +29,7 @@ class Imovel {
     double getlng() const;
     std::string getEndereco() const;
     double getPreco() const;
+    int getIdCorretorAvaliador() const;
 
     // Setters
     void setId(int id);
@@ -37,5 +39,6 @@ class Imovel {
     void setLng(double lng);
     void setEndereco(std::string endereco);
     void setPreco(double preco);
+    void setIdCorretorAvaliador(int id);
 };
 #endif
