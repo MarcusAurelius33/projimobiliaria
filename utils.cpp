@@ -1,4 +1,6 @@
 #include <cmath>
+#include <sstream>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -50,7 +52,6 @@ void lerEntrada(std::vector<Corretor>& corretores, std::vector<Cliente>& cliente
         std::cin >> telefone;
         std::getline(std::cin >> std::ws, nome);
 
-        // O construtor do Cliente está correto.
         clientes.emplace_back(nome, telefone);
     }
 
@@ -71,7 +72,7 @@ void lerEntrada(std::vector<Corretor>& corretores, std::vector<Cliente>& cliente
             tipo_enum = Imovel::Tipo::Casa;
         } else if (tipo_str == "Apartamento") {
             tipo_enum = Imovel::Tipo::Apartamento;
-        } else { // if (tipo_str == "Terreno")
+        } else { 
             tipo_enum = Imovel::Tipo::Terreno;
         }
  
@@ -98,34 +99,26 @@ void roundRobin(std::vector<Imovel>& imoveis, const std::vector<Corretor>& corre
 
     int idx = 0;
     for (auto& imovel : imoveis) {
-        // Supondo que exista setter para isso — ou salve num mapa
-        // Exemplo: setCorretorAvaliadorId()
         imovel.setIdCorretorAvaliador(avaliadores[idx].getId()); 
         idx = (idx + 1) % avaliadores.size();
     }
 }
 
-struct Agendamento {
-int imovelId;
-int corretorId;
-std::string horario;
-};
-
 // Converte minutos para "HH:MM"
 std::string minutosParaHorario(int minutos) {
     int h = minutos / 60;
     int m = minutos % 60;
-    char buffer[6];
-    sprintf(buffer, "%02d:%02d", h, m);
-    return std::string(buffer);
+    std::stringstream ss;
+    ss << std::setw(2) << std::setfill('0') << h << ":"
+       << std::setw(2) << std::setfill('0') << m;
+    return ss.str();
 }
 
 // --- AGENDAMENTO ---
 std::vector<Agendamento> agendarVisitasPorVizinhoMaisProximo(
     std::vector<Imovel>& imoveis,
-    const std::vector<Corretor>& corretores,
-    const std::map<int, int>& imovelParaCorretor // imovelId -> corretorId
-) {
+    const std::vector<Corretor>& corretores)
+    {
     std::vector<Agendamento> agendaFinal;
 
     for (const auto& corretor : corretores) {
@@ -134,8 +127,7 @@ std::vector<Agendamento> agendarVisitasPorVizinhoMaisProximo(
         // Filtrar imóveis atribuídos a este corretor
         std::vector<Imovel*> atribuidos;
         for (auto& imovel : imoveis) {
-            auto it = imovelParaCorretor.find(imovel.getId());
-            if (it != imovelParaCorretor.end() && it->second == corretor.getId()) {
+            if (imovel.getIdCorretorAvaliador() == corretor.getId()) {
                 atribuidos.push_back(&imovel);
             }
         }
@@ -151,7 +143,7 @@ std::vector<Agendamento> agendarVisitasPorVizinhoMaisProximo(
             for (int i = 0; i < atribuidos.size(); ++i) {
                 double dist = haversine(
                     atualLat, atualLng,
-                    atribuidos[i]->getlat(), atribuidos[i]->getlng()
+                    atribuidos[i]->getLat(), atribuidos[i]->getLng()
                 );
                 if (dist < menorDist) {
                     menorDist = dist;
@@ -172,12 +164,11 @@ std::vector<Agendamento> agendarVisitasPorVizinhoMaisProximo(
                 horario
             });
 
-            atualLat = proximo->getlat();
-            atualLng = proximo->getlng();
+            atualLat = proximo->getLat();
+            atualLng = proximo->getLng();
 
             atribuidos.erase(atribuidos.begin() + idxMaisProximo);
         }
     }
-
     return agendaFinal;
-}
+    }

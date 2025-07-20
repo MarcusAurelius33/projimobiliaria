@@ -25,8 +25,8 @@ class Imovel {
     int getId() const;
     Tipo getTipo() const;
     int getProprietarioId() const;
-    double getlat() const;
-    double getlng() const;
+    double getLat() const;
+    double getLng() const;
     std::string getEndereco() const;
     double getPreco() const;
     int getIdCorretorAvaliador() const;

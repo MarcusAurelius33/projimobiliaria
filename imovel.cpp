@@ -4,14 +4,14 @@ int Imovel::nextId=1;
 
 // Construtor
 Imovel::Imovel(Tipo tipo, int proprietarioId, double lat, double lng, std::string endereco, double preco)
-    : id(nextId++), tipo(tipo), proprietarioId(proprietarioId), lat(lat), lng(lng), endereco(endereco), preco(preco) {}
+    : id(nextId++), tipo(tipo), proprietarioId(proprietarioId), lat(lat), lng(lng), endereco(endereco), preco(preco), idCorretorAvaliador(-1) {}
 
 // Getters
 int Imovel::getId() const { return id; }
 Imovel::Tipo Imovel::getTipo() const { return tipo; }
 int Imovel::getProprietarioId() const { return proprietarioId; }
-double Imovel::getlat() const { return lat; }
-double Imovel::getlng() const { return lng; }
+double Imovel::getLat() const { return lat; }
+double Imovel::getLng() const { return lng; }
 std::string Imovel::getEndereco() const { return endereco; }
 double Imovel::getPreco() const { return preco; }
 int Imovel::getIdCorretorAvaliador() const {return idCorretorAvaliador;}
